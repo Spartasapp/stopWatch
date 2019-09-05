@@ -1,26 +1,42 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { connect } from "react-redux";
+import { startStopWatchThunkAC ,stopStopWatchThunkAC,resetStopWatchThunkAC} from './redux/counterReducer';
 
-function App() {
+const App = (props) => {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='buttons'>
+      <div className='start' onClick={props.startSecundomer}>Start</div>
+      <div className='start' onClick={props.pauseSecundomer}>Pause</div>
+      <div className='start' onClick={props.resetSecundomer}>Reset</div>
+      </div>
+      <div className='screen'>{props.seconds}</div>
     </div>
   );
 }
 
-export default App;
+let mapStateToProps = (state) => {
+  return {
+    seconds: state.counter.seconds
+  }
+}
+let mapDispatchToProps = (dispatch) => {
+  return {
+    startSecundomer: () => {
+      let thunk = startStopWatchThunkAC();
+      dispatch(thunk);
+    },
+    pauseSecundomer: () => {
+      let thunk = stopStopWatchThunkAC();
+      dispatch(thunk);
+    },
+    resetSecundomer: ()=>{
+      let thunk = resetStopWatchThunkAC();
+      dispatch(thunk);
+    }
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
