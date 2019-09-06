@@ -11,18 +11,20 @@ const App = (props) => {
       <div className='start' onClick={props.pauseSecundomer}>Pause</div>
       <div className='start' onClick={props.resetSecundomer}>Reset</div>
       </div>
-      <div className='screen'>{props.seconds}</div>
+      <div className='screen'><div className='border'>{props.minutes}</div>-<div className='border'>{props.seconds}</div></div>
     </div>
   );
 }
 
 let mapStateToProps = (state) => {
   return {
-    seconds: state.counter.seconds
+    seconds: state.counter.seconds,
+    minutes: state.counter.minutes
   }
 }
 let mapDispatchToProps = (dispatch) => {
   return {
+
     startSecundomer: () => {
       let thunk = startStopWatchThunkAC();
       dispatch(thunk);

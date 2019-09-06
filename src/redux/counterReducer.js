@@ -3,6 +3,7 @@ export const PAUSE_WATCH = "PAUSE_WATCH";
 export const RESET_WATCH = "RESET_WATCH";
 let initialState = {
     seconds: 0,
+    minutes: 0,
     status: 0,
     timer: undefined
 }
@@ -26,9 +27,13 @@ const CounterReducer = (state = initialState, action) => {
     debugger
     switch (action.type) {
         case START_WATCH: {
+            if(state.seconds >=60){  
+                state.seconds = 0;
+                state.minutes = state.minutes+1;
+            }
             return {
                 ...state,
-                seconds: state.seconds + 1, timer: action.timer
+                seconds: state.seconds + 1, timer: action.timer,
             }
 
         }
@@ -41,7 +46,8 @@ const CounterReducer = (state = initialState, action) => {
         case RESET_WATCH: {
             return {
                 ...state,
-                seconds: state.seconds = 0
+                seconds: state.seconds = 0,
+                minutes: state.minutes =0
             }
         }
 
